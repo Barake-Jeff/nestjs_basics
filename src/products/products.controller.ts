@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -23,7 +24,11 @@ export class ProductsController {
   // GET /products/id --> { ... }
   @Get(':id')
   getProductById(@Param('id') id: string) {
-    return this.productservice.getProduct(+id);
+    try {
+      return this.productservice.getProduct(+id);
+    } catch (error) {
+      throw new NotFoundException();
+    }
   }
   // POST /products --> { ... }
   @Post()
